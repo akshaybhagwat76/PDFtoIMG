@@ -52,28 +52,6 @@ namespace PDFtoIMG.Controllers
             }
             return Json(file.FileName, JsonRequestBehavior.AllowGet);
         }
-
-        //public void Pdf2ImageConversion(string FileName, string PdfFolderPath)
-        //{
-        //    String FileNamewithoutExtension = System.IO.Path.GetFileNameWithoutExtension(FileName);
-        //    String ImgFolderPath = System.Web.Hosting.HostingEnvironment.MapPath("-/ImgFolder1" + FileNamewithoutExtension + ".png");
-        //    var info = new System.IO.FileInfo(ImgFolderPath);
-        //    if (info.Exists.Equals(false))
-        //    {
-
-        //        GhostscriptPngDevice img = new GhostscriptPngDevice(GhostscriptPngDeviceType.Png16m);
-        //        img.GraphicsAlphaBits = GhostscriptImageDeviceAlphaBits.V_4;
-        //        img.TextAlphaBits = GhostscriptImageDeviceAlphaBits.V_4;
-        //        img.ResolutionXY = new GhostscriptImageDeviceResolution(200, 200);
-        //        img.InputFiles.Add(PdfFolderPath);
-        //        img.Pdf.FirstPage = 1;
-        //        img.Pdf.LastPage = 1;
-        //        img.PostScript = string.Empty;
-        //        img.OutputPath = ImgFolderPath;
-        //        img.Process();
-        //    }
-        //}
-
         public ActionResult AsposeConverter()
         {
             try
