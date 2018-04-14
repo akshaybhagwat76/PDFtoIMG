@@ -74,27 +74,23 @@ namespace PDFtoIMG.Controllers
                 }
                else
                 {
-                    //Document imgDocument = new Document(FolderPath);
-                    Aspose.Pdf.Document pdfDocument = new Aspose.Pdf.Document();
-                    pdfDocument.Pages.Add();
-                    int lowerLeftX = 100;
-                    int lowerLeftY = 100;
+                    var pdf = new Aspose.Pdf.Generator.Pdf();
+                    var section = pdf.Sections.Add();
+                    List<string> pageCounts = new List<string>();
+            
+                    for (int i = 1; i < section.PageCount; i++)
+                    {
 
-                    int upperRightX = 200;
-                    int upperRightY = 200;
-                    Page page = pdfDocument.Pages[1];
-                    FileStream imageStream = new FileStream(FolderPath, FileMode.Open);
-                    page.Resources.Images.Add(imageStream);
-                    page.Contents.Add(new Operator.GSave());
-                    Aspose.Pdf.Rectangle rectangle = new Aspose.Pdf.Rectangle(lowerLeftX, lowerLeftY, upperRightX, upperRightY);
-                    Aspose.Pdf.DOM.Matrix matrix = new Aspose.Pdf.DOM.Matrix(new double[] { rectangle.URX - rectangle.LLX, 0, 0, rectangle.URY - rectangle.LLY, rectangle.LLX, rectangle.LLY });
-                    page.Contents.Add(new Operator.ConcatenateMatrix(matrix));
-                    XImage ximage = page.Resources.Images[page.Resources.Images.Count];
-                    page.Contents.Add(new Operator.Do(ximage.Name));
-                    page.Contents.Add(new Operator.GRestore());
-                    //var fileName1 = DateTime.Now.ToString("dd_MM_yyyy_hh_mm_ss") + ext;
-                    //uploadpath = string.Format("{0}\\{1}", path.ToString(), fileName1);
-                    pdfDocument.Save(Server.MapPath("~/PdfFolder/") + "Image -In-PDF.pdf");
+                    }
+                    var newImage = new Aspose.Pdf.Generator.Image(section);
+                    section.Paragraphs.Add(newImage);
+
+                    var existedImage = System.Drawing.Image.FromFile(FolderPath);
+
+                    newImage.ImageInfo.SystemImage = existedImage;
+                    newImage.ImageInfo.ImageFileType = Aspose.Pdf.Generator.ImageFileType.Jpeg;
+
+                    pdf.Save(Server.MapPath("~/PdfFolder/") + "Image -In-PDF.pdf");
                 }
 
             }
