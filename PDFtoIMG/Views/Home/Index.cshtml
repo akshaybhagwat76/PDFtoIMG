@@ -1,0 +1,63 @@
+﻿
+@{
+	ViewBag.Title = "Index";
+}
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<h2>Index</h2>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<style type="text/css">
+	body {
+		margin-top: 20px;
+	}
+</style>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
+<script src="~/Scripts/bootstrap.min.js"></script>
+<form class="container" id="form1" enctype="multipart/form-data" method="post" action="#">
+	<div class="row setup-content" id="step-1">
+		<div class="col-xs-12">
+			<div class="col-md-12 well text-center">
+				<label for="fileToUpload">Select a File to Upload</label><br />
+				<input type="file" name="fileToUpload" id="fileToUpload" />
+			</div>
+			<div id="fileName"></div>
+			<div id="fileSize"></div>
+			<div id="fileType"></div>
+			<div class="row" id="actionRow">
+				<input type="button" class="btn btn-primary" onclick="uploadFile()" value="Upload" />
+			</div>
+			<div id="progressNumber">
+
+			</div>
+		</div>
+	</div>
+	</div>
+</form>
+<script>
+	$(document).ready(function () {
+
+	});
+	var uploadFile = function () {
+		debugger;
+		var file = $("#fileToUpload").get(0).files;
+		var data = new FormData();
+		data.append("imageFile", file[0]);
+
+		$.ajax({
+			type: "POST",
+			url: "/Home/ImageUpload",
+			data: data,
+			contentType: false,
+			processData: false,
+			success: function (response) {
+				debugger;
+				if (response != null && response != "") {
+					console.log(response);
+					//$("#ddiv").append('<img src="/imagefolder/' + response + '" class="img-responsive thumbnail" />');
+					$("#progressNumber").html("<a href='@Url.Action("AsposeConverter")'>Download Image</a><input type='hidden' id='hdnPath' value='" + response + "'>");
+				}
+			}
+		});
+	}
+
+</script>
